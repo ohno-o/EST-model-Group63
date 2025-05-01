@@ -1,4 +1,4 @@
-# EST-model
+    # EST-model
 This project contains the *Simulink model* for the **Energy Storage and Transport (EST)** project. This Simulink model contains a simplified version of a real-life energy storage and transport system, which describes the flow of energy in such a system. Supporting MATLAB files are provided which can be used to predefine parameters and to post-process data into figures.
 
 ## Getting started
