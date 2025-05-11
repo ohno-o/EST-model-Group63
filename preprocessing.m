@@ -67,8 +67,45 @@ env_temp = 293;  % in kelvin
     t1 = 0.1;
     t2 = 0.15;
     t3 = 0.05;
-    t4 = 0.015;
+    t4 = 0.015; %The steel layer
 
 conv_coeff = 15;
 steel_emissivity = 0.35;
 SB_constant = 5.67 * 10^-8;
+
+%% CALCULATIONS THAT COUDN'T IMPLEMENT INSIDE A SIMULINK BLOCK
+
+%Calculating insulation resistance
+A1 = 2*pi*radius_in*height_in + 2*pi*radius_in^2;
+
+r2 = radius_in + t1;
+h2 = height_in + 2*t1;
+A2 = 2*pi*r2*h2 + 2*pi*r2^2;
+
+r3 = radius_in + t1 + t2;
+h3 = height_in + 2*t1 + 2*t2;
+A3 = 2*pi*r3*h3 + 2*pi*r3^2;
+
+R1 = t1/k1*A1;
+R2 = t2/k2*A2;
+R3 = t3/k3*A3;
+
+insulation_resistance = R1 + R2 + R3;
+
+% Calculating outside area
+r_total = radius_in + t1 + t2 +t3 + t4;
+h_total = height_in + 2*t1 + 2*t2 + 2*t3 + 2*t4;
+outside_area = 2*pi*r_total*h_total + 2*pi*r_total^2; 
+
+% Calcualting surface temp.
+% Assuming isnside temp is homogeneous and
+% considering conduction, convection & radiation.
+heat_balance = @(surface_temp)(salt_temp - surface_temp)/insulation_resistance - ...
+conv_coeff*outside_area*(surface_temp - env_temp) - ...
+steel_emissivity*SB_constant*outside_area*(surface_temp^4 - env_temp^4);
+
+surface_temp_initial = env_temp;  % Initial condition for surface temp
+
+% Solve using fsolve
+options = optimoptions('fsolve', 'Display', 'iter');
+surface_temp = fsolve(heat_balance, surface_temp_initial, options);
