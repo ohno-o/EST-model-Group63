@@ -109,3 +109,4 @@ surface_temp_initial = env_temp;  % Initial condition for surface temp
 % Solve using fsolve
 options = optimoptions('fsolve', 'Display', 'iter');
 surface_temp = fsolve(heat_balance, surface_temp_initial, options);
+disp(surface_temp);
