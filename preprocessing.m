@@ -86,11 +86,11 @@ r3 = radius_in + t1 + t2;
 h3 = height_in + 2*t1 + 2*t2;
 A3 = 2*pi*r3*h3 + 2*pi*r3^2;
 
-R1 = t1/k1*A1;
-R2 = t2/k2*A2;
-R3 = t3/k3*A3;
+Res1 = t1/(k1*A1);
+Res2 = t2/(k2*A2);
+Res3 = t3/(k3*A3);
 
-insulation_resistance = R1 + R2 + R3;
+insulation_resistance = Res1 + Res2 + Res3;
 
 % Calculating outside area
 r_total = radius_in + t1 + t2 +t3 + t4;
@@ -104,9 +104,7 @@ heat_balance = @(surface_temp)(salt_temp - surface_temp)/insulation_resistance -
 conv_coeff*outside_area*(surface_temp - env_temp) - ...
 steel_emissivity*SB_constant*outside_area*(surface_temp^4 - env_temp^4);
 
-surface_temp_initial = env_temp;  % Initial condition for surface temp
+surface_temp_initial = 0.5*(salt_temp + env_temp);  % Initial condition for surface temp
 
 % Solve using fsolve
-options = optimoptions('fsolve', 'Display', 'iter');
-surface_temp = fsolve(heat_balance, surface_temp_initial, options);
-disp(surface_temp);
+surface_temp = fsolve(heat_balance, surface_temp_initial);
