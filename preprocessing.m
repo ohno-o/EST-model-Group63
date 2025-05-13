@@ -1,7 +1,7 @@
 % Pre-processing script for the EST Simulink model. This script is invoked
 % before the Simulink model starts running (initFcn callback function).
 
-%% Load the supply and demand data
+%% LOAD THE SUPPLY AND DEMAND DATA
 
 timeUnit   = 's';
 
@@ -17,23 +17,47 @@ demandUnit = "MW";
 % load the demand data
 Demand = loadDemandData(demandFile, timeUnit, demandUnit);
 
-%% Simulation settings
+%% SIMULATION SETTINGS
 
 deltat = 5*unit("min");
 stopt  = min([Supply.Timeinfo.End, Demand.Timeinfo.End]);
 
-%% System parameters
+%% SYSTEM PARAMETERS
 
-% transport from supply
+% Transport from supply
 aSupplyTransport = 0.01; % Dissipation coefficient
 
-% injection system
+% Injection system
 aInjection = 0.1; % Dissipation coefficient
 
-% storage system
+% Storage system
 EStorageMax     = 4320000.0*unit("kWh"); % Maximum energy
 EStorageMin     = 0.0*unit("kWh"); % Minimum energy
 EStorageInitial = 4320000.0*unit("kWh"); % Initial energy
+
+no_tanks = 2;
+tank_volume = 10000;
+radius_in = 11.7; % Inner radius of the tank
+height_in = 23.4; % Inner height of the tank
+salt_temp = 838; % in kelvin
+env_temp = 293; % in kelvin
+
+    % Insulation made of 3 contributing layers.
+    % Conductivity coefficients:
+    k1 = 1.2; % High−alumina refractory
+    k2 = 0.14; % Ceramic fiber blanket
+    k3 = 0.008; % VIP layer
+
+    %All layers thickness:
+    t1 = 0.1; % H−Al ref
+    t2 = 0.15; % CFB
+    t3 = 0.015; % St layer
+    t4 = 0.025; % VIP layer
+    t5 = 0.002; % Al cladding
+
+conv_coeff = 20;
+aluminum_emissivity = 0.3;
+SB_constant = 5.67 * 10^-8;
 
 % extraction system
 aExtraction = 0.1; % Dissipation coefficient
@@ -54,35 +78,6 @@ T_water = 90;   %this should be changed to a function in order to reflect the co
 
 % transport to demand
 aDemandTransport = 0.01; % Dissipation coefficient
-
-
-%% STORAGE PARAMETERS
-
-no_tanks = 2;
-tank_volume = 10000;
-radius_in = 11.7; %Inner radius of the tank
-height_in = 23.4; %Inner height of the tank
-salt_temp = 838; % in kelvin
-env_temp = 293; % in kelvin
-
-% Insulation made of 3 contributing layers.
-
-% Conductivity coefficients:
-k1 = 1.2; %High−alumina refractory
-k2 = 0.14; %Ceramic fiber blanket
-k3 = 0.008; %VIP layer
-
-%All layers thickness:
-t1 = 0.1; %High−alumina refractory
-t2 = 0.15; %Ceramic fiber blanket
-t3 = 0.015; %The steel layer
-t4 = 0.025; %VIP layer
-t5 = 0.002; %Aluminum cladding
-
-
-conv_coeff = 20;
-aluminum_emissivity = 0.3;
-SB_constant = 5.67 * 10^-8;
 
 %% CALCULATIONS THAT COUDN'T IMPLEMENT INSIDE A SIMULINK BLOCK
 
