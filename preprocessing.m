@@ -38,10 +38,10 @@ EStorageInitial = 4320000.0*unit("kWh"); % Initial energy
 % extraction system
 aExtraction = 0.1; % Dissipation coefficient
 
-entrop1 = 2723.62*10^3; %J/kg
-entrop2 = 2706.54*10^3; %J/kg
-entrop3 = 505.572*10^3; %J/kg
-entrop4 = 505.572*10^3; %J/kg
+entrop1 = 3375; %kJ/kg
+entrop2 = 2510; %kJ/kg
+entrop3 = 125; %kJ/kg
+entrop4 = 125; %kJ/kg
 
     %water tank parameters
     wallThickness = 0.2; %meters
