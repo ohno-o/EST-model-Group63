@@ -56,60 +56,67 @@ T_water = 90;   %this should be changed to a function in order to reflect the co
 aDemandTransport = 0.01; % Dissipation coefficient
 
 
-% Storage parameters
+%% STORAGE PARAMETERS
+
 no_tanks = 2;
 tank_volume = 10000;
-radius_in = 11.7;
-height_in = 23.4;
-salt_temp = 838;  % in kelvin
-env_temp = 293;  % in kelvin
+radius_in = 11.7; %Inner radius of the tank
+height_in = 23.4; %Inner height of the tank
+salt_temp = 838; % in kelvin
+env_temp = 293; % in kelvin
 
-    % Insulation made of 3 layers
-    k1 = 1.2;
-    k2 = 0.14;
-    k3 = 0.12;
+% Insulation made of 3 contributing layers.
 
-    t1 = 0.1;
-    t2 = 0.15;
-    t3 = 0.05;
-    t4 = 0.015; %The steel layer
+% Conductivity coefficients:
+k1 = 1.2; %High−alumina refractory
+k2 = 0.14; %Ceramic fiber blanket
+k3 = 0.008; %VIP layer
 
-conv_coeff = 15;
-steel_emissivity = 0.35;
+%All layers thickness:
+t1 = 0.1; %High−alumina refractory
+t2 = 0.15; %Ceramic fiber blanket
+t3 = 0.015; %The steel layer
+t4 = 0.025; %VIP layer
+t5 = 0.002; %Aluminum cladding
+
+
+conv_coeff = 20;
+aluminum_emissivity = 0.3;
 SB_constant = 5.67 * 10^-8;
 
 %% CALCULATIONS THAT COUDN'T IMPLEMENT INSIDE A SIMULINK BLOCK
 
 %Calculating insulation resistance
-A1 = 2*pi*radius_in*height_in + 2*pi*radius_in^2;
+A1 = 2*pi*radius_in*height_in + 2*pi*radius_in^2; %Area of refractory
 
 r2 = radius_in + t1;
 h2 = height_in + 2*t1;
-A2 = 2*pi*r2*h2 + 2*pi*r2^2;
+A2 = 2*pi*r2*h2 + 2*pi*r2^2; %Area of CFB
 
-r3 = radius_in + t1 + t2;
-h3 = height_in + 2*t1 + 2*t2;
-A3 = 2*pi*r3*h3 + 2*pi*r3^2;
+r3 = radius_in + t1 + t2 + t3;
+h3 = height_in + 2*t1 + 2*t2 + 2*t3;
+A3 = 2*pi*r3*h3 + 2*pi*r3^2; %Area of VIP layer
 
-Res1 = t1/(k1*A1);
-Res2 = t2/(k2*A2);
-Res3 = t3/(k3*A3);
+Res1 = t1/(k1*A1); %resistance of alumina refractory
+Res2 = t2/(k2*A2); %resistance of ceramic fiber blanket
+Res3 = t3/(k3*A3); %VIP layer resistance
 
 insulation_resistance = Res1 + Res2 + Res3;
 
 % Calculating outside area
-r_total = radius_in + t1 + t2 +t3 + t4;
-h_total = height_in + 2*t1 + 2*t2 + 2*t3 + 2*t4;
-outside_area = 2*pi*r_total*h_total + 2*pi*r_total^2; 
+r_total = radius_in + t1 + t2 +t3 + t4 + t5;
+h_total = height_in + 2*t1 + 2*t2 + 2*t3 + 2*t4 + 2*t5;
+outside_area = 2*pi*r_total*h_total + 2*pi*r_total^2;
 
 % Calcualting surface temp.
 % Assuming isnside temp is homogeneous and
 % considering conduction, convection & radiation.
 heat_balance = @(surface_temp)(salt_temp - surface_temp)/insulation_resistance - ...
 conv_coeff*outside_area*(surface_temp - env_temp) - ...
-steel_emissivity*SB_constant*outside_area*(surface_temp^4 - env_temp^4);
+aluminum_emissivity*SB_constant*outside_area*(surface_temp^4 - env_temp^4);
 
 surface_temp_initial = 0.5*(salt_temp + env_temp);  % Initial condition for surface temp
 
 % Solve using fsolve
 surface_temp = fsolve(heat_balance, surface_temp_initial);
+
