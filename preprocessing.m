@@ -36,7 +36,6 @@ EStorageMin     = 0.0*unit("kWh"); % Minimum energy
 EStorageInitial = 4320000.0*unit("kWh"); % Initial energy
 
 no_tanks = 2;
-tank_volume = 10000;
 radius_in = 11.7; % Inner radius of the tank
 height_in = 23.4; % Inner height of the tank
 salt_temp = 838; % in kelvin
@@ -59,24 +58,15 @@ conv_coeff = 20;
 aluminum_emissivity = 0.3;
 SB_constant = 5.67 * 10^-8;
 
-% extraction system
-aExtraction = 0.1; % Dissipation coefficient
+% Extraction system
 
-entrop1 = 3375; %kJ/kg
-entrop2 = 2510; %kJ/kg
-entrop3 = 125; %kJ/kg
-entrop4 = 125; %kJ/kg
+    % Entropy values of Rankine cycle in [kJ/kg]
+    entrop1 = 3445; 
+    entrop2 = 2100; 
+    entrop3 = 151; 
+    entrop4 = 153; 
 
-    %water tank parameters
-    wallThickness = 0.2; %meters
-    r_in = 1.5;
-    height = 4;
-    conductivity = 1;   %W/(m*K), realistic value for concrete.
-T_env = 10; %degrees C, average temp in the netherlands
-T_water = 90;   %this should be changed to a function in order to reflect the cooling due to heat loss
-
-
-% transport to demand
+% Transport to demand
 aDemandTransport = 0.118; % Dissipation coefficient
 
 %% CALCULATIONS THAT COUDN'T IMPLEMENT INSIDE A SIMULINK BLOCK
