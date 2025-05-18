@@ -77,7 +77,7 @@ T_water = 90;   %this should be changed to a function in order to reflect the co
 
 
 % transport to demand
-aDemandTransport = 0.01; % Dissipation coefficient
+aDemandTransport = 0.118; % Dissipation coefficient
 
 %% CALCULATIONS THAT COUDN'T IMPLEMENT INSIDE A SIMULINK BLOCK
 
