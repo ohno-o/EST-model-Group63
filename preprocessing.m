@@ -19,23 +19,23 @@ Demand = loadDemandData(demandFile, timeUnit, demandUnit);
 
 %% SIMULATION SETTINGS
 
-deltat = 5*unit("min");
+deltat = 15*unit("min");
 stopt  = min([Supply.Timeinfo.End, Demand.Timeinfo.End]);
 
 %% SYSTEM PARAMETERS
 
 % Transport from supply
 aSupplyTransport = 0.059; % Dissipation coefficient
-
+                          
 % Injection system
-aInjection = 0.02; % Dissipation coefficient
+aInjection = 0.01; % Range: 0.003-0.015 
 
 % Storage system
 EStorageMax     = 4320000.0*unit("kWh"); % Maximum energy
 EStorageMin     = 0.0*unit("kWh"); % Minimum energy
-EStorageInitial = 4320000.0*unit("kWh"); % Initial energy
+EStorageInitial = 0.0*unit("kWh"); % Initial energy
 
-no_tanks = 2;
+no_tanks = 2; % Number of storage tanks
 radius_in = 11.7; % Inner radius of the tank
 height_in = 23.4; % Inner height of the tank
 salt_temp = 838; % in kelvin
@@ -54,8 +54,8 @@ env_temp = 293; % in kelvin
     t4 = 0.025; % VIP layer
     t5 = 0.002; % Al cladding
 
-conv_coeff = 20;
-aluminum_emissivity = 0.3;
+conv_coeff = 20; % Range: 5-25
+aluminum_emissivity = 0.2; % Range: 0.09-0.3
 SB_constant = 5.67 * 10^-8;
 
 % Extraction system
