@@ -60,11 +60,15 @@ SB_constant = 5.67 * 10^-8;
 
 % Extraction system
 
-    % Entropy values of Rankine cycle in [kJ/kg]
-    entrop1 = 3445; 
-    entrop2 = 2100; 
-    entrop3 = 151; 
-    entrop4 = 153; 
+    % Entropy values for ideal Rankine cycle in [kJ/kg]
+    entrop1 = 151; 
+    entrop2 = 155; 
+    entrop3 = 3501; 
+    entrop4 = 2015; 
+
+pump_eff = 0.9;
+turbine_eff = 0.88;
+heatexch_eff = 0.91;
 
 % Transport to demand
 aDemandTransport = 0.118; % Dissipation coefficient
