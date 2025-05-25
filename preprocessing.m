@@ -71,7 +71,7 @@ turbine_eff = 0.88;
 heatexch_eff = 0.91;
 
 % Transport to demand
-aDemandTransport = 0.118; % Dissipation coefficient
+aDemandTransport = 0.0964; % Dissipation coefficient
 
 %% CALCULATIONS THAT COUDN'T IMPLEMENT INSIDE A SIMULINK BLOCK
 
