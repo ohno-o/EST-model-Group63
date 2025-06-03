@@ -28,7 +28,7 @@ stopt  = min([Supply.Timeinfo.End, Demand.Timeinfo.End]);
 aSupplyTransport = 0.059; % Dissipation coefficient
                           
 % Injection system
-aInjection = 0.01; % Range: 0.003-0.015 
+aInjection = 0.003; % Range: 0.003-0.015 
 
 % Storage system
 EStorageMax     = 4320000.0*unit("kWh"); % Maximum energy
