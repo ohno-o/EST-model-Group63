@@ -39,7 +39,7 @@ no_tanks = 2; % Number of storage tanks
 radius_in = 11.7; % Inner radius of the tank
 height_in = 23.4; % Inner height of the tank
 salt_temp = 838; % in kelvin
-env_temp = 293; % in kelvin
+env_temp = 284; % in kelvin
 
     % Insulation made of 3 contributing layers.
     % Conductivity coefficients:
