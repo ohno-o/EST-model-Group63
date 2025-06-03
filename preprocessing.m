@@ -52,7 +52,7 @@ env_temp = 284; % in kelvin
     t2 = 0.15; % CFB
     t3 = 0.015; % St layer
     t4 = 0.025; % VIP layer
-    t5 = 0.002; % Al cladding
+    t5 = 0.003; % Al cladding
 
 conv_coeff = 20; % Range: 5-25
 aluminum_emissivity = 0.2; % Range: 0.09-0.3
@@ -86,9 +86,9 @@ r3 = radius_in + t1 + t2 + t3;
 h3 = height_in + 2*t1 + 2*t2 + 2*t3;
 A3 = 2*pi*r3*h3 + 2*pi*r3^2; %Area of VIP layer
 
-Res1 = t1/(k1*A1); %resistance of alumina refractory
-Res2 = t2/(k2*A2); %resistance of ceramic fiber blanket
-Res3 = t3/(k3*A3); %VIP layer resistance
+Res1 = t1/(k1*A1); % Resistance of alumina refractory
+Res2 = t2/(k2*A2); % Resistance of ceramic fiber blanket
+Res3 = t3/(k3*A3); % VIP layer resistance
 
 insulation_resistance = Res1 + Res2 + Res3;
 
@@ -97,15 +97,13 @@ r_total = radius_in + t1 + t2 +t3 + t4 + t5;
 h_total = height_in + 2*t1 + 2*t2 + 2*t3 + 2*t4 + 2*t5;
 outside_area = 2*pi*r_total*h_total + 2*pi*r_total^2;
 
-% Calcualting surface temp.
-% Assuming isnside temp is homogeneous and
-% considering conduction, convection & radiation.
+% Calculating surface temp
 heat_balance = @(surface_temp)(salt_temp - surface_temp)/insulation_resistance - ...
 conv_coeff*outside_area*(surface_temp - env_temp) - ...
 aluminum_emissivity*SB_constant*outside_area*(surface_temp^4 - env_temp^4);
 
-surface_temp_initial = 0.5*(salt_temp + env_temp);  % Initial condition for surface temp
+surface_temp_initial = 0.5*(salt_temp + env_temp);  % Initial guess for surface temp
 
-% Solve using fsolve
+% Solve equation using fsolve
 surface_temp = fsolve(heat_balance, surface_temp_initial);
 
