@@ -60,11 +60,11 @@ SB_constant = 5.67 * 10^-8;
 
 % Extraction system
 
-    % Entropy values for ideal Rankine cycle in [kJ/kg]
-    entrop1 = 151; 
-    entrop2 = 155; 
-    entrop3 = 3501; 
-    entrop4 = 2015; 
+    % Enthalpy values for ideal Rankine cycle in [kJ/kg]
+    enth1 = 151; 
+    enth2 = 155; 
+    enth3 = 3501; 
+    enth4 = 2015; 
 
 pump_eff = 0.9;
 turbine_eff = 0.88;
