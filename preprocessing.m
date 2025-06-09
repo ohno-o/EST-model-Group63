@@ -54,7 +54,7 @@ env_temp = 284; % in kelvin
     t4 = 0.025; % VIP layer
     t5 = 0.003; % Al cladding
 
-conv_coeff = 20; % Range: 5-25
+conv_coeff = 20; % Range: 10-20
 aluminum_emissivity = 0.2; % Range: 0.09-0.3
 SB_constant = 5.67 * 10^-8;
 
@@ -88,7 +88,7 @@ A3 = 2*pi*r3*h3 + 2*pi*r3^2; %Area of VIP layer
 
 Res1 = t1/(k1*A1); % Resistance of alumina refractory
 Res2 = t2/(k2*A2); % Resistance of ceramic fiber blanket
-Res3 = t3/(k3*A3); % VIP layer resistance
+Res3 = t4/(k3*A3); % VIP layer resistance
 
 insulation_resistance = Res1 + Res2 + Res3;
 
